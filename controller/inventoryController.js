@@ -1,4 +1,5 @@
 const knex = require("knex")(require("../knexfile"));
+const { v4: uuid } = require('uuid');
 
 module.exports = {
   getAll: async (req, res) => {
@@ -40,15 +41,25 @@ module.exports = {
       res.status(500).json({ error: "Unable to get inventory" });
     }
   },
-  create: async (req, res) => {
-    const { name, address } = req.body;
-    try {
-      const [id] = await knex("inventories").insert({ name, address });
-      res.status(201).json({ id, name, address });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Unable to create inventory" });
+  create: (req, res) => {
+    const warehouse_id = req.body.itemWarehouseId;
+    const item_name = req.body.itemName;
+    const description = req.body.itemDescription;
+    const category = req.body.itemCategory;
+    const status = req.body.itemStatus;
+    const quantity = req.body.itemQuantity;
+
+    if (!warehouse_id || !item_name || !description || !category || !status || !quantity) {
+      return res.status(400).send('Please make sure to fill out all fields in the request');
     }
+    const id = uuid();
+    knex('inventories')
+      .insert({ id, warehouse_id, item_name, description, category, status, quantity })
+      .then((data) => {
+        const newInventoryURL = `/inventory/${data[0]}`;
+        res.status(201).location(newInventoryURL).send(newInventoryURL);
+      })
+      .catch((err) => res.status(400).send(`Error creating Inventory: ${err}`));
   },
   update: async (req, res) => {
     const { id } = req.params;
