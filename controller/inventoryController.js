@@ -3,7 +3,15 @@ const knex = require('knex')(require('../knexfile'));
 module.exports = {
   getAll: async (req, res) => {
     try {
-      const inventories = await knex('inventories');
+      const inventories = await knex('inventories').select(
+        'id',
+        'warehouse_id',
+        'item_name',
+        'description',
+        'category',
+        'status',
+        'quantity'
+      );
       res.status(200).json(inventories);
     } catch (err) {
       console.error(err);
