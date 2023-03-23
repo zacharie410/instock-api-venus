@@ -24,7 +24,17 @@ module.exports = {
   getById: async (req, res) => {
     const { id } = req.params;
     try {
-      const warehouse = await knex('warehouses').where({ id }).first();
+      const warehouse = await knex('warehouses').select(
+        'id',
+        'warehouse_name',
+        'address',
+        'city',
+        'country',
+        'contact_name',
+        'contact_position',
+        'contact_phone',
+        'contact_email'
+      ).where({ id }).first();
       if (!warehouse) {
         res.status(404).json({ error: 'Warehouse not found' });
       } else {
