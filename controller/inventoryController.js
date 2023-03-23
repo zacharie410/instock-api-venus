@@ -3,7 +3,15 @@ const knex = require("knex")(require("../knexfile"));
 module.exports = {
   getAll: async (req, res) => {
     try {
-      const inventories = await knex("inventories");
+      const inventories = await knex('inventories').select(
+        'id',
+        'warehouse_id',
+        'item_name',
+        'description',
+        'category',
+        'status',
+        'quantity'
+      );
       res.status(200).json(inventories);
     } catch (err) {
       console.error(err);
@@ -13,7 +21,15 @@ module.exports = {
   getById: async (req, res) => {
     const { id } = req.params;
     try {
-      const inventory = await knex("inventories").where({ id }).first();
+      const inventory = await knex('inventories').select(
+        'id',
+        'warehouse_id',
+        'item_name',
+        'description',
+        'category',
+        'status',
+        'quantity'
+      ).where({ id }).first();
       if (!inventory) {
         res.status(404).json({ error: "inventory not found" });
       } else {
