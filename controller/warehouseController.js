@@ -36,20 +36,20 @@ module.exports = {
   },
   update: async (req, res) => {
     const { id } = req.params;
-    const { name, address } = req.body;
+    const { warehouse_name, address, city, country, contact_name, contact_position, contact_phone, contact_email } = req.body;
     try {
       const warehouse = await knex('warehouses').where({ id }).first();
       if (!warehouse) {
         res.status(404).json({ error: 'Warehouse not found' });
       } else {
-        await knex('warehouses').where({ id }).update({ name, address });
-        res.status(200).json({ id, name, address });
+        await knex('warehouses').where({ id }).update({ warehouse_name, address, city, country, contact_name, contact_position, contact_phone, contact_email });
+        res.status(200).json({ id, warehouse_name, address, city, country, contact_name, contact_position, contact_phone, contact_email });
       }
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Unable to update warehouse' });
     }
-  },
+  },  
   delete: async (req, res) => {
     const { id } = req.params;
     try {
