@@ -9,7 +9,7 @@ router.get('/', warehouseController.getAll);
 router.get('/:id', warehouseController.getById);
 
 // POST a new warehouse
-router.post('/', warehouseController.create);
+router.route('/').post(warehouseController.create);
 
 // PUT/update a warehouse by id
 router.put('/:id', warehouseController.update);
