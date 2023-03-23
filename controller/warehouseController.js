@@ -26,20 +26,21 @@ module.exports = {
     }
   },
   create: (req, res) => {
-    const { name, 
-            streetAddress, 
-            city, 
-            country, 
-            contactName, 
-            contactPosition, 
-            contactPhoneNumber, 
-            contactEmail } = req.body;
-    if (!name || !streetAddress || !city || !country || !contactName || !contactPosition || !contactPhoneNumber || !contactEmail) {
+    const warehouse_name = req.body.name;
+    const address = req.body.streetAddress;
+    const city = req.body.city;
+    const country = req.body.country;
+    const contact_name = req.body.contactName;
+    const contact_position = req.body.contactPosition;
+    const contact_phone = req.body.contactPhoneNumber;
+    const contact_email = req.body.contactEmail;
+
+    if (!warehouse_name || !address || !city || !country || !contact_name || !contact_position || !contact_phone || !contact_email) {
       return res.status(400).send('Please make sure to fill out all fields in the request');
     }
     const id = uuid();
     knex('warehouses')
-      .insert({ id, name, streetAddress, city, country, contactName, contactPosition, contactPhoneNumber, contactEmail })
+      .insert({ id, warehouse_name, address, city, country, contact_name, contact_position, contact_phone, contact_email })
       .then((data) => {
         const newWarehouseURL = `/warehouse/${data[0]}`;
         res.status(201).location(newWarehouseURL).send(newWarehouseURL);
