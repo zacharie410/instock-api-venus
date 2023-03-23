@@ -1,4 +1,5 @@
 const knex = require('knex')(require('../knexfile'));
+const { v4: uuid } = require('uuid');
 
 module.exports = {
   getAll: async (req, res) => {
@@ -45,15 +46,27 @@ module.exports = {
       res.status(500).json({ error: 'Unable to get warehouse' });
     }
   },
-  create: async (req, res) => {
-    const { name, address } = req.body;
-    try {
-      const [id] = await knex('warehouses').insert({ name, address });
-      res.status(201).json({ id, name, address });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Unable to create warehouse' });
+  create: (req, res) => {
+    const warehouse_name = req.body.name;
+    const address = req.body.streetAddress;
+    const city = req.body.city;
+    const country = req.body.country;
+    const contact_name = req.body.contactName;
+    const contact_position = req.body.contactPosition;
+    const contact_phone = req.body.contactPhoneNumber;
+    const contact_email = req.body.contactEmail;
+
+    if (!warehouse_name || !address || !city || !country || !contact_name || !contact_position || !contact_phone || !contact_email) {
+      return res.status(400).send('Please make sure to fill out all fields in the request');
     }
+    const id = uuid();
+    knex('warehouses')
+      .insert({ id, warehouse_name, address, city, country, contact_name, contact_position, contact_phone, contact_email })
+      .then((data) => {
+        const newWarehouseURL = `/warehouse/${data[0]}`;
+        res.status(201).location(newWarehouseURL).send(newWarehouseURL);
+      })
+      .catch((err) => res.status(400).send(`Error creating Warehouse: ${err}`));
   },
   update: async (req, res) => {
     const { id } = req.params;
