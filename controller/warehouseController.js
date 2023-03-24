@@ -4,24 +4,27 @@ const { v4: uuid } = require('uuid');
 module.exports = {
   getAll: async (req, res) => {
     try {
-      const warehouses = await knex('warehouses').select(
-        'id',
-        'warehouse_name',
-        'address',
-        'city',
-        'country',
-        'contact_name',
-        'contact_position',
-        'contact_phone',
-        'contact_email'
-      );
-      
+      const { sort_by = 'id', order_by = 'asc' } = req.query;
+      const warehouses = await knex('warehouses')
+        .select(
+          'id',
+          'warehouse_name',
+          'address',
+          'city',
+          'country',
+          'contact_name',
+          'contact_position',
+          'contact_phone',
+          'contact_email'
+        )
+        .orderBy(sort_by, order_by);
       res.status(200).json(warehouses);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Unable to get warehouses' });
     }
   },
+  
   getById: async (req, res) => {
     const { id } = req.params;
     try {
