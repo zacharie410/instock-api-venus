@@ -4,6 +4,7 @@ const { v4: uuid } = require('uuid');
 module.exports = {
   getAll: async (req, res) => {
     try {
+      const { sort_by = 'id', order_by = 'asc' } = req.query;
       const inventories = await knex('inventories').select(
         'id',
         'warehouse_id',
@@ -12,7 +13,8 @@ module.exports = {
         'category',
         'status',
         'quantity'
-      );
+      )
+      .orderBy(sort_by, order_by);
       res.status(200).json(inventories);
     } catch (err) {
       console.error(err);
