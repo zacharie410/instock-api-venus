@@ -24,17 +24,22 @@ module.exports = {
   getById: async (req, res) => {
     const { id } = req.params;
     try {
-      const inventory = await knex('inventories').select(
-        'id',
-        'warehouse_id',
-        'item_name',
-        'description',
-        'category',
-        'status',
-        'quantity'
-      ).where({ id }).first();
+      const inventory = await knex('inventories')
+        .leftJoin('warehouses', 'inventories.warehouse_id', 'warehouses.id')
+        .select(
+          'inventories.id',
+          'inventories.warehouse_id',
+          'warehouses.warehouse_name as warehouse_name',
+          'inventories.item_name',
+          'inventories.description',
+          'inventories.category',
+          'inventories.status',
+          'inventories.quantity'
+        )
+        .where({ 'inventories.id': id })
+        .first();
       if (!inventory) {
-        res.status(404).json({ error: "inventory not found" });
+        res.status(404).json({ error: "Inventory not found" });
       } else {
         res.status(200).json(inventory);
       }
