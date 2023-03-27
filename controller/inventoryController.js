@@ -5,16 +5,19 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const { sort_by = 'id', order_by = 'asc' } = req.query;
-      const inventories = await knex('inventories').select(
-        'id',
-        'warehouse_id',
-        'item_name',
-        'description',
-        'category',
-        'status',
-        'quantity'
-      )
-      .orderBy(sort_by, order_by);
+      const inventories = await knex('inventories')
+        .leftJoin('warehouses', 'inventories.warehouse_id', 'warehouses.id')
+        .select(
+          'inventories.id',
+          'inventories.warehouse_id',
+          'warehouses.warehouse_name as warehouse_name',
+          'inventories.item_name',
+          'inventories.description',
+          'inventories.category',
+          'inventories.status',
+          'inventories.quantity'
+        )
+        .orderBy(sort_by, order_by);
       res.status(200).json(inventories);
     } catch (err) {
       console.error(err);
