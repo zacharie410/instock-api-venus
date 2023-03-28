@@ -24,18 +24,24 @@ Clone the repo and open it.
 Set up your .env using the .env.sample
 
 ### On front end run:
+
 `npm install`
+
 `npm start`
 
 ### On back end,
 Make sure your mysql is setup,
 then
 run:
+
 `npm install`
+
 `npm run db:migrate`
+
 `npm run db:seed`
 
 `npm run dev`
+
 If above doesnt work try:
 `node index.js`
 
