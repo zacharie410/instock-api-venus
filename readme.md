@@ -1,12 +1,11 @@
 # InStock - Inventory Management System
-## BACK END REPOSITORY
-
 InStock is a modern and scalable inventory management system, built with a React front-end and an Express back-end.
+
+## BACK END REPOSITORY
+This is the back end code
 
 # Links
 [Front End Repository](https://github.com/alis-SWE/instock-venus-team/ "FRONT END")
-
-[Back End Repository](https://github.com/zacharie410/instock-api-venus/ "BACK END")
 
 [JIRA Board](https://brainstationeducation.atlassian.net/jira/software/c/projects/J23VS/boards/393 "JIRA")
 
