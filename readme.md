@@ -130,21 +130,16 @@ This endpoint retrieves a specific inventory item from the database by its ID.
 
 This endpoint creates a new inventory item in the database. The following parameters should be included in the request body:
 
-`{
-
+``` json
+{
   "itemWarehouseId": "string",
-  
   "itemName": "string",
-  
   "itemDescription": "string",
-  
   "itemCategory": "string",
-  
   "itemStatus": "string",
-  
   "itemQuantity": "integer"
-  
-}` 
+}
+```
 
 ### PUT/update a inventory by id
 
@@ -152,21 +147,16 @@ This endpoint creates a new inventory item in the database. The following parame
 
 This endpoint updates an existing inventory item in the database by its ID. The following parameters should be included in the request body:
 
-`{
-
+``` json
+{
   "item_name": "string",
-  
   "description": "string",
-  
   "category": "string",
-  
   "status": "string",
-  
   "quantity": "integer",
-  
   "warehouse_id": "string"
-  
-}` 
+}
+```
 
 ### DELETE a inventory by id
 
@@ -192,25 +182,18 @@ This endpoint retrieves a specific warehouse from the database by its ID.
 
 This endpoint creates a new warehouse in the database. The following parameters should be included in the request body:
 
-`{
-
+``` json
+{
   "warehouse_name": "string",
-  
   "address": "string",
-  
   "city": "string",
-  
   "country": "string",
-  
   "contact_name": "string",
-  
   "contact_position": "string",
-  
   "contact_phone": "string",
-  
   "contact_email": "string",
-  
-}` 
+}
+```
 
 ### PUT/update a warehouse by id
 
@@ -218,25 +201,18 @@ This endpoint creates a new warehouse in the database. The following parameters 
 
 This endpoint updates an existing warehouse in the database by its ID. The following parameters should be included in the request body:
 
-`{
-
+``` json
+{
   "warehouse_name": "string",
-  
   "address": "string",
-  
   "city": "string",
-  
   "country": "string",
-  
   "contact_name": "string",
-  
   "contact_position": "string",
-  
   "contact_phone": "string",
-  
   "contact_email": "string",
-  
-}` 
+}
+```
 
 ### DELETE a warehouse by id
 
@@ -251,20 +227,16 @@ You can use tools like Postman or curl to test the API endpoints. Here's an exam
 `POST /inventory
 Content-Type: application/json
 
+``` json
 {
   "itemWarehouseId": "2922c286-16cd-4d43-ab98-c79f698aeab0",
-  
   "itemName": "Laptop",
-  
   "itemDescription": "Dell XPS 13",
-  
   "itemCategory": "Electronics",
-  
   "itemStatus": "In Stock",
-  
   "itemQuantity": 10
-  
-}` 
+}
+```
 
 Here's an example request to retrieve a specific inventory item:
 
