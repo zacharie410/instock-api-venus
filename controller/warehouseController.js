@@ -1,6 +1,12 @@
 const knex = require('knex')(require('../knexfile'));
 const { v4: uuid } = require('uuid');
 
+// Function to validate email inputs
+function validateEmail(email) {
+  var re = /\S+@\S+\.\S+/; //eslint-disable-line
+  return re.test(email);
+}
+
 module.exports = {
   getAll: async (req, res) => {
     try {
@@ -59,7 +65,7 @@ module.exports = {
     const contact_phone = req.body.contactPhoneNumber;
     const contact_email = req.body.contactEmail;
 
-    if (!warehouse_name || !address || !city || !country || !contact_name || !contact_position || !contact_phone || !contact_email) {
+    if (warehouse_name.length < 2 || address.length < 1 || city.length < 2 || country.length < 2 || contact_name.length < 2 || contact_position.length < 2 || contact_phone.length < 7 || !validateEmail(contact_email)) {
       return res.status(400).send('Please make sure to fill out all fields in the request');
     }
     const id = uuid();
