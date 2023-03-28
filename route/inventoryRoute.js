@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const inventoryController = require('../controllers/inventoryController');
+const inventoryController = require('../controller/inventoryController');
 
 // GET all inventorys
 router.get('/', inventoryController.getAll);
@@ -9,7 +9,7 @@ router.get('/', inventoryController.getAll);
 router.get('/:id', inventoryController.getById);
 
 // POST a new inventory
-router.post('/', inventoryController.create);
+router.route('/').post(inventoryController.create);
 
 // PUT/update a inventory by id
 router.put('/:id', inventoryController.update);
